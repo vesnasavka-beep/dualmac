@@ -722,8 +722,9 @@
   }
 
   // Formulario → Formspree → redirige a Calendly
-  // REEMPLAZA la URL de Calendly antes de publicar
   const CALENDLY_URL = 'https://calendly.com/dualmacreuniones/30min';
+  const SB_URL = 'https://jogdohvmrjkqtkhmkuah.supabase.co';
+  const SB_KEY = 'sb_publishable_om1yqroYf4zgIe4UmBW1bg_8Fu3mSN8';
 
   const form = document.getElementById('contactForm');
   form.addEventListener('submit', async e => {
@@ -732,13 +733,30 @@
     btn.textContent = 'Enviando...';
     btn.disabled = true;
     try {
-      const res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
-      if(res.ok){
-        window.location.href = CALENDLY_URL;
-      } else {
-        btn.textContent = 'Error al enviar. Intenta de nuevo.';
-        btn.disabled = false;
-      }
+      const fd = new FormData(form);
+      const leadData = {
+        nombre: fd.get('nombre'),
+        apellido: fd.get('apellido'),
+        email: fd.get('email'),
+        telefono: fd.get('telefono'),
+        empresa: fd.get('empresa'),
+        instagram: fd.get('instagram'),
+        ventas: fd.get('ventas'),
+        rubro: fd.get('tipo'),
+        presupuesto: fd.get('presupuesto'),
+        proyecto: fd.get('proyecto'),
+        canal: 'landing',
+        estado: 'Nuevo'
+      };
+      await Promise.all([
+        fetch(form.action, { method:'POST', body:fd, headers:{'Accept':'application/json'} }),
+        fetch(`${SB_URL}/rest/v1/leads`, {
+          method:'POST',
+          headers:{ 'apikey':SB_KEY, 'Authorization':`Bearer ${SB_KEY}`, 'Content-Type':'application/json', 'Prefer':'return=minimal' },
+          body: JSON.stringify(leadData)
+        })
+      ]);
+      window.location.href = CALENDLY_URL;
     } catch {
       btn.textContent = 'Error al enviar. Intenta de nuevo.';
       btn.disabled = false;
