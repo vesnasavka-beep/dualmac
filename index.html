@@ -643,7 +643,7 @@
       <h2 class="h2">¿Tu negocio está listo para <span class="hl-azul">clientes constantes</span>?</h2>
       <p class="lead">Completa el formulario y agenda directamente tu reunión de diagnóstico. Sin compromiso, sin costo.</p>
       <div class="form-card">
-        <form id="contactForm" action="https://formspree.io/f/xaqvylaa" method="POST">
+        <form id="contactForm">
           <div class="f-grid">
             <div class="fg"><label for="nombre">Nombre *</label><input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required /></div>
             <div class="fg"><label for="apellido">Apellido *</label><input type="text" id="apellido" name="apellido" placeholder="Tu apellido" required /></div>
@@ -721,7 +721,6 @@
     if (!isOpen) plan.classList.add('open');
   }
 
-  // Formulario → Formspree → redirige a Calendly
   const CALENDLY_URL = 'https://calendly.com/dualmacreuniones/30min';
   const SB_URL = 'https://jogdohvmrjkqtkhmkuah.supabase.co';
   const SB_KEY = 'sb_publishable_om1yqroYf4zgIe4UmBW1bg_8Fu3mSN8';
@@ -748,15 +747,17 @@
         canal: 'landing',
         estado: 'Nuevo'
       };
-      await Promise.all([
-        fetch(form.action, { method:'POST', body:fd, headers:{'Accept':'application/json'} }),
-        fetch(`${SB_URL}/rest/v1/leads`, {
-          method:'POST',
-          headers:{ 'apikey':SB_KEY, 'Authorization':`Bearer ${SB_KEY}`, 'Content-Type':'application/json', 'Prefer':'return=minimal' },
-          body: JSON.stringify(leadData)
-        })
-      ]);
-      window.location.href = CALENDLY_URL;
+      const res = await fetch(`${SB_URL}/rest/v1/leads`, {
+        method: 'POST',
+        headers: { 'apikey':SB_KEY, 'Authorization':`Bearer ${SB_KEY}`, 'Content-Type':'application/json', 'Prefer':'return=minimal' },
+        body: JSON.stringify(leadData)
+      });
+      if (res.ok || res.status === 201) {
+        window.location.href = CALENDLY_URL;
+      } else {
+        btn.textContent = 'Error al enviar. Intenta de nuevo.';
+        btn.disabled = false;
+      }
     } catch {
       btn.textContent = 'Error al enviar. Intenta de nuevo.';
       btn.disabled = false;
