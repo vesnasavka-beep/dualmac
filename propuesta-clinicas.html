@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Propuesta Comercial — Dualmac Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --azul:#0066CC;
+    --azul-e:#0099FF;
+    --purpura:#9933FF;
+    --naranja:#F39200;
+    --negro:#060810;
+    --gris-oscuro:#0d1117;
+    --blanco:#ffffff;
+    --gris-texto:#5a6478;
+    --gris-claro:#f4f6fa;
+    --borde:#e2e8f0;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Montserrat',sans-serif; background:#f0f2f7; color:#1a2035; }
+
+  .page {
+    width:210mm;
+    margin:0 auto 20px;
+    background:#fff;
+    position:relative;
+    overflow:hidden;
+  }
+
+  /* ── PORTADA ── */
+  .cover {
+    background:var(--negro);
+    min-height:297mm;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+    overflow:hidden;
+  }
+  .cover-bg {
+    position:absolute;inset:0;
+    background: radial-gradient(ellipse at 80% 20%, rgba(0,102,204,.35) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(153,51,255,.25) 0%, transparent 55%);
+  }
+  .cover-content { position:relative;z-index:1;padding:52px 52px 48px;flex:1;display:flex;flex-direction:column; }
+  .cover-logo { height:42px;margin-bottom:auto; }
+  .cover-tag {
+    display:inline-block;background:rgba(0,153,255,.15);border:1px solid rgba(0,153,255,.3);
+    color:var(--azul-e);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    padding:6px 14px;border-radius:20px;margin-bottom:28px;width:fit-content;
+  }
+  .cover-title {
+    font-size:2.6rem;font-weight:900;line-height:1.15;color:var(--blanco);margin-bottom:20px;
+  }
+  .cover-title span { color:var(--azul-e); }
+  .cover-subtitle { font-size:1rem;color:rgba(255,255,255,.6);line-height:1.6;max-width:380px;margin-bottom:48px; }
+  .cover-for {
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+    border-radius:12px;padding:20px 24px;
+  }
+  .cover-for-label { font-size:.7rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px; }
+  .cover-for-name { font-size:1.1rem;font-weight:700;color:var(--blanco); }
+  .cover-bottom {
+    margin-top:auto;padding-top:32px;
+    display:flex;justify-content:space-between;align-items:flex-end;
+    border-top:1px solid rgba(255,255,255,.08);
+  }
+  .cover-contact { font-size:.75rem;color:rgba(255,255,255,.4);line-height:1.8; }
+  .cover-contact a { color:var(--azul-e);text-decoration:none; }
+  .cover-date { font-size:.72rem;color:rgba(255,255,255,.3);text-align:right; }
+
+  /* ── PÁGINAS INTERNAS ── */
+  .inner { padding:52px; min-height:297mm; display:flex;flex-direction:column; }
+  .inner.light { background:#fff; }
+  .inner.dark { background:var(--negro);color:var(--blanco); }
+  .inner.accent { background:var(--gris-claro); }
+
+  .section-tag {
+    font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--azul);margin-bottom:10px;
+  }
+  .section-tag.white { color:var(--azul-e); }
+
+  h2 { font-size:1.75rem;font-weight:900;line-height:1.2;margin-bottom:16px; }
+  h2 .hl { color:var(--azul-e); }
+  h2 .hl-p { color:var(--purpura); }
+  h2 .hl-o { color:var(--naranja); }
+  .lead-text { font-size:.95rem;color:var(--gris-texto);line-height:1.7;margin-bottom:32px; }
+  .lead-text.white { color:rgba(255,255,255,.65); }
+
+  /* Problema items */
+  .problem-list { display:flex;flex-direction:column;gap:14px;margin-bottom:36px; }
+  .problem-item {
+    display:flex;gap:14px;align-items:flex-start;
+    background:var(--gris-claro);border-radius:10px;padding:16px 20px;
+    border-left:3px solid var(--purpura);
+  }
+  .problem-icon { font-size:1.3rem;line-height:1;flex-shrink:0;margin-top:2px; }
+  .problem-text { font-size:.85rem;color:#2d3748;line-height:1.6; }
+  .problem-text strong { display:block;font-weight:700;margin-bottom:2px;color:#1a2035; }
+
+  /* Stats */
+  .stats-row { display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px; }
+  .stat-box {
+    background:var(--gris-oscuro);border-radius:12px;padding:24px 20px;text-align:center;
+    border:1px solid rgba(255,255,255,.07);
+  }
+  .stat-num { font-size:2rem;font-weight:900;color:var(--naranja); }
+  .stat-label { font-size:.72rem;color:rgba(255,255,255,.5);margin-top:4px;line-height:1.4; }
+
+  /* Solución pillars */
+  .pillars { display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px; }
+  .pillar {
+    background:#fff;border-radius:12px;padding:24px 20px;
+    border:1px solid var(--borde);border-top:3px solid var(--azul);
+  }
+  .pillar-num { font-size:.72rem;font-weight:900;color:var(--azul);letter-spacing:.08em;margin-bottom:10px; }
+  .pillar h3 { font-size:.95rem;font-weight:700;margin-bottom:8px;color:#1a2035; }
+  .pillar p { font-size:.78rem;color:var(--gris-texto);line-height:1.6; }
+
+  /* Planes */
+  .planes-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:32px; }
+  .plan-card {
+    border-radius:14px;padding:26px 22px;border:1px solid var(--borde);
+    position:relative;overflow:hidden;
+  }
+  .plan-card.featured {
+    background:var(--negro);border-color:var(--azul);
+    box-shadow:0 0 0 1px rgba(0,102,204,.3), inset 0 0 40px rgba(0,102,204,.05);
+  }
+  .plan-card.featured .plan-name { color:var(--blanco); }
+  .plan-card.featured .plan-price { color:var(--naranja); }
+  .plan-card.featured .plan-desc { color:rgba(255,255,255,.6); }
+  .plan-card.featured .plan-item { color:rgba(255,255,255,.75); }
+  .plan-badge {
+    position:absolute;top:16px;right:16px;
+    background:var(--naranja);color:#000;font-size:.65rem;font-weight:900;
+    padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em;
+  }
+  .plan-name { font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--azul);margin-bottom:8px; }
+  .plan-price { font-size:1.4rem;font-weight:900;color:#1a2035;margin-bottom:4px; }
+  .plan-price span { font-size:.75rem;font-weight:400;color:var(--gris-texto); }
+  .plan-desc { font-size:.78rem;color:var(--gris-texto);margin-bottom:16px;line-height:1.5; }
+  .plan-items { list-style:none;display:flex;flex-direction:column;gap:6px; }
+  .plan-item { font-size:.75rem;color:#2d3748;display:flex;gap:8px;align-items:flex-start; }
+  .plan-item::before { content:'→';color:var(--azul-e);font-weight:700;flex-shrink:0; }
+
+  /* Por qué */
+  .porque-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:32px; }
+  .porque-item {
+    background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+    border-radius:10px;padding:20px;
+  }
+  .porque-icon { font-size:1.5rem;margin-bottom:10px; }
+  .porque-item h3 { font-size:.88rem;font-weight:700;color:var(--blanco);margin-bottom:6px; }
+  .porque-item p { font-size:.76rem;color:rgba(255,255,255,.55);line-height:1.6; }
+
+  /* CTA final */
+  .cta-box {
+    background:linear-gradient(135deg, var(--azul) 0%, var(--purpura) 100%);
+    border-radius:16px;padding:40px;text-align:center;margin-bottom:32px;
+  }
+  .cta-box h2 { color:var(--blanco);margin-bottom:12px; }
+  .cta-box p { color:rgba(255,255,255,.8);font-size:.9rem;margin-bottom:28px;line-height:1.6; }
+  .cta-btn {
+    display:inline-block;background:var(--naranja);color:#000;
+    font-weight:900;font-size:.95rem;padding:14px 36px;border-radius:8px;
+    text-decoration:none;
+  }
+  .cta-contact { display:flex;justify-content:center;gap:32px;margin-top:24px; }
+  .cta-contact-item { font-size:.78rem;color:rgba(255,255,255,.6);text-align:center; }
+  .cta-contact-item strong { display:block;color:var(--blanco);margin-bottom:2px; }
+
+  /* Footer interno */
+  .page-footer {
+    margin-top:auto;padding-top:24px;
+    display:flex;justify-content:space-between;align-items:center;
+    border-top:1px solid var(--borde);font-size:.68rem;color:var(--gris-texto);
+  }
+  .page-footer.dark-footer { border-color:rgba(255,255,255,.08);color:rgba(255,255,255,.3); }
+
+  .divider { height:1px;background:var(--borde);margin:28px 0; }
+  .divider.dark-div { background:rgba(255,255,255,.08); }
+
+  /* Print */
+  @media print {
+    body { background:#fff; }
+    .page { margin:0;box-shadow:none; }
+    @page { size:A4;margin:0; }
+  }
+
+  /* Botón imprimir (no se imprime) */
+  .print-btn {
+    position:fixed;bottom:28px;right:28px;z-index:999;
+    background:var(--naranja);color:#000;font-family:'Montserrat',sans-serif;
+    font-weight:700;font-size:.85rem;border:none;border-radius:10px;
+    padding:12px 24px;cursor:pointer;box-shadow:0 4px 20px rgba(243,146,0,.4);
+  }
+  .print-btn:hover { background:#e08500; }
+  @media print { .print-btn { display:none; } }
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">Guardar como PDF</button>
+
+<!-- ═══ PÁGINA 1 — PORTADA ═══ -->
+<div class="page">
+  <div class="cover">
+    <div class="cover-bg"></div>
+    <div class="cover-content">
+      <img src="logo.png" alt="Dualmac Studio" class="cover-logo" />
+
+      <div style="margin-top:auto;padding-bottom:48px;">
+        <div class="cover-tag">Propuesta Comercial · 2026</div>
+        <h1 class="cover-title">
+          Tu clínica merece<br/>
+          una agenda <span>llena</span><br/>
+          todos los meses.
+        </h1>
+        <p class="cover-subtitle">
+          Te mostramos cómo convertir tu presencia digital en un sistema constante de captación de pacientes nuevos.
+        </p>
+        <div class="cover-for">
+          <div class="cover-for-label">Preparado para</div>
+          <div class="cover-for-name">_________________________</div>
+        </div>
+      </div>
+
+      <div class="cover-bottom">
+        <div class="cover-contact">
+          <div>dualmacventas@gmail.com</div>
+          <div>dualmac.cl</div>
+        </div>
+        <div class="cover-date">
+          Mayo 2026<br/>Santiago, Chile
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PÁGINA 2 — EL PROBLEMA ═══ -->
+<div class="page">
+  <div class="inner light">
+    <div class="section-tag">El diagnóstico</div>
+    <h2>Lo que le pasa a la mayoría<br/>de las <span class="hl-p">clínicas estéticas</span> hoy</h2>
+    <p class="lead-text">
+      Tienes una clínica con buenos tratamientos y profesionales capacitados. Pero el calendario no está tan lleno como debería. El problema casi nunca es el servicio — es que no existe un sistema digital que atraiga pacientes nuevos de forma constante.
+    </p>
+
+    <div class="problem-list">
+      <div class="problem-item">
+        <div class="problem-icon">📉</div>
+        <div class="problem-text">
+          <strong>Dependencia del boca a boca</strong>
+          Los pacientes nuevos llegan solo por recomendación. Sin un sistema digital activo, el crecimiento es impredecible y lento.
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-icon">📱</div>
+        <div class="problem-text">
+          <strong>Redes sociales sin estrategia ni resultados medibles</strong>
+          Se publican fotos y reels, pero no hay un sistema detrás que convierta esas visitas en agendamientos reales.
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-icon">💸</div>
+        <div class="problem-text">
+          <strong>Inversión en publicidad sin retorno claro</strong>
+          Se paga en Meta Ads o Google sin saber exactamente qué campaña trajo a qué paciente ni cuánto costó cada uno.
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-icon">🏥</div>
+        <div class="problem-text">
+          <strong>La competencia avanza más rápido</strong>
+          Otras clínicas en Las Condes ya tienen sistemas de captación digital activos. Cada mes que pasa, el costo de ponerse al día es mayor.
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#fff8f0;border-left:3px solid var(--naranja);border-radius:0 10px 10px 0;padding:18px 22px;">
+      <p style="font-size:.85rem;color:#1a2035;line-height:1.6;">
+        <strong style="color:var(--naranja);">La buena noticia:</strong> esto tiene solución. No requiere un equipo interno de marketing ni grandes presupuestos. Requiere el sistema correcto, ejecutado por las personas correctas.
+      </p>
+    </div>
+
+    <div class="page-footer">
+      <span>Dualmac Studio · Propuesta Comercial 2026</span>
+      <img src="logo.png" alt="" style="height:22px;opacity:.4;" />
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PÁGINA 3 — LA SOLUCIÓN ═══ -->
+<div class="page">
+  <div class="inner dark">
+    <div class="section-tag white">Nuestra propuesta</div>
+    <h2 style="color:#fff;">Un sistema completo que<br/><span class="hl">atrae, convierte y fideliza</span><br/>pacientes nuevos.</h2>
+    <p class="lead-text white">
+      En Dualmac Studio construimos sistemas de marketing digital orientados a resultados reales: más pacientes agendados, más ventas de tratamientos y una presencia digital que trabaja para tu clínica las 24 horas.
+    </p>
+
+    <div class="pillars" style="grid-template-columns:repeat(3,1fr);">
+      <div class="pillar" style="background:#0d1117;border-color:rgba(255,255,255,.08);border-top-color:var(--azul-e);">
+        <div class="pillar-num" style="color:var(--azul-e);">01</div>
+        <h3 style="color:#fff;">Atracción</h3>
+        <p style="color:rgba(255,255,255,.55);">Campañas en Meta Ads segmentadas por zona, edad e interés para atraer pacientes con intención real de reservar.</p>
+      </div>
+      <div class="pillar" style="background:#0d1117;border-color:rgba(255,255,255,.08);border-top-color:var(--purpura);">
+        <div class="pillar-num" style="color:var(--purpura);">02</div>
+        <h3 style="color:#fff;">Conversión</h3>
+        <p style="color:rgba(255,255,255,.55);">Contenido orgánico de alto impacto + automatización de mensajes que convierte seguidores en pacientes agendados.</p>
+      </div>
+      <div class="pillar" style="background:#0d1117;border-color:rgba(255,255,255,.08);border-top-color:var(--naranja);">
+        <div class="pillar-num" style="color:var(--naranja);">03</div>
+        <h3 style="color:#fff;">Escala</h3>
+        <p style="color:rgba(255,255,255,.55);">Motor de IA DMS que analiza resultados, optimiza campañas y escala lo que funciona mes a mes.</p>
+      </div>
+    </div>
+
+    <div class="divider dark-div"></div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num">1.000+</div>
+        <div class="stat-label">Seguidores calificados<br/>captados por mes</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">30 días</div>
+        <div class="stat-label">Para tener el sistema<br/>completamente activo</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Enfoque en resultados<br/>medibles y reales</div>
+      </div>
+    </div>
+
+    <div class="page-footer dark-footer">
+      <span>Dualmac Studio · Propuesta Comercial 2026</span>
+      <img src="logo.png" alt="" style="height:22px;opacity:.3;" />
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PÁGINA 4 — PLANES ═══ -->
+<div class="page">
+  <div class="inner light">
+    <div class="section-tag">Planes disponibles</div>
+    <h2>Elige el plan que se<br/>adapta a <span class="hl">tu etapa</span></h2>
+    <p class="lead-text">Todos los planes incluyen estrategia, producción de contenido, reportes mensuales y soporte directo con el equipo Dualmac.</p>
+
+    <div class="planes-grid">
+      <div class="plan-card">
+        <div class="plan-name">Plan Emprendedor</div>
+        <div class="plan-price">$374.850 <span>CLP / mes</span></div>
+        <div class="plan-desc">Ideal para clínicas que están activando su presencia digital por primera vez.</div>
+        <ul class="plan-items">
+          <li class="plan-item">4 posts + 12 stories + 8 reels / mes</li>
+          <li class="plan-item">Estrategia de contenido mensual</li>
+          <li class="plan-item">Diseño editorial con identidad visual</li>
+          <li class="plan-item">Reporte de métricas mensual</li>
+        </ul>
+      </div>
+
+      <div class="plan-card featured">
+        <div class="plan-badge">Más popular</div>
+        <div class="plan-name">Plan Basic</div>
+        <div class="plan-price">$1.075.200 <span>CLP / mes</span></div>
+        <div class="plan-desc">Para clínicas que quieren profesionalizar su imagen y empezar a captar pacientes digitalmente.</div>
+        <ul class="plan-items">
+          <li class="plan-item">8 posts + 12 stories + 4 reels / mes</li>
+          <li class="plan-item">Gestión de cuenta + comunidad</li>
+          <li class="plan-item">Motor IA DMS activo</li>
+          <li class="plan-item">Scanner de competencia</li>
+        </ul>
+      </div>
+
+      <div class="plan-card">
+        <div class="plan-name">Plan Black</div>
+        <div class="plan-price">$2.189.981 <span>CLP / mes</span></div>
+        <div class="plan-desc">Tráfico, visibilidad y leads. Para clínicas que quieren crecer de forma acelerada.</div>
+        <ul class="plan-items">
+          <li class="plan-item">12 posts + 16 stories + 8 reels / mes</li>
+          <li class="plan-item">Campañas Meta Ads incluidas</li>
+          <li class="plan-item">Automatización de mensajes</li>
+          <li class="plan-item">Jornada de grabación mensual</li>
+        </ul>
+      </div>
+
+      <div class="plan-card">
+        <div class="plan-name">Plan Gold</div>
+        <div class="plan-price">$2.387.616 <span>CLP / mes</span></div>
+        <div class="plan-desc">Escalamiento completo con automatización avanzada e inteligencia artificial.</div>
+        <ul class="plan-items">
+          <li class="plan-item">16 posts + 20 stories + 12 reels / mes</li>
+          <li class="plan-item">Sistema de captación omnicanal</li>
+          <li class="plan-item">Avatares IA + UGC creators</li>
+          <li class="plan-item">Reunión estratégica quincenal</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="font-size:.75rem;color:var(--gris-texto);text-align:center;">
+      * Todos los precios son referenciales. La propuesta final se entrega tras el diagnóstico gratuito.
+    </p>
+
+    <div class="page-footer">
+      <span>Dualmac Studio · Propuesta Comercial 2026</span>
+      <img src="logo.png" alt="" style="height:22px;opacity:.4;" />
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PÁGINA 5 — POR QUÉ DUALMAC + CTA ═══ -->
+<div class="page">
+  <div class="inner dark">
+    <div class="section-tag white">Por qué elegirnos</div>
+    <h2 style="color:#fff;">No somos una agencia más.<br/>Somos tu <span class="hl">equipo de crecimiento.</span></h2>
+    <p class="lead-text white">
+      Trabajamos con clínicas estéticas que quieren un sistema real, no solo bonitas fotos en Instagram.
+    </p>
+
+    <div class="porque-grid">
+      <div class="porque-item">
+        <div class="porque-icon">🎯</div>
+        <h3>Performance primero</h3>
+        <p>Todo lo que hacemos tiene un objetivo medible. Si no hay resultados, hay conversación.</p>
+      </div>
+      <div class="porque-item">
+        <div class="porque-icon">🤖</div>
+        <h3>Motor de IA DMS</h3>
+        <p>Tecnología de inteligencia artificial propia que analiza algoritmos y optimiza campañas en tiempo real.</p>
+      </div>
+      <div class="porque-item">
+        <div class="porque-icon">📊</div>
+        <h3>Transparencia total</h3>
+        <p>Reporte mensual con métricas claras: alcance, leads generados, costo por paciente y ROAS.</p>
+      </div>
+      <div class="porque-item">
+        <div class="porque-icon">🇨🇱</div>
+        <h3>Equipo chileno, enfoque local</h3>
+        <p>Entendemos el mercado de Las Condes y Santiago. Estrategias pensadas para el consumidor chileno.</p>
+      </div>
+    </div>
+
+    <div class="divider dark-div"></div>
+
+    <div class="cta-box">
+      <h2 style="font-size:1.6rem;">¿Lista para tener una agenda<br/>llena de pacientes nuevos?</h2>
+      <p>Agenda un diagnóstico gratuito de 30 minutos. Sin compromiso.<br/>Analizamos tu situación actual y te mostramos exactamente qué haríamos.</p>
+      <a href="https://calendly.com/dualmacreuniones/30min" class="cta-btn">Agendar diagnóstico gratuito →</a>
+      <div class="cta-contact">
+        <div class="cta-contact-item">
+          <strong>Email</strong>
+          dualmacventas@gmail.com
+        </div>
+        <div class="cta-contact-item">
+          <strong>Web</strong>
+          dualmac.cl
+        </div>
+        <div class="cta-contact-item">
+          <strong>Instagram</strong>
+          @dualmacstudio
+        </div>
+      </div>
+    </div>
+
+    <div class="page-footer dark-footer">
+      <span>© 2026 Dualmac Studio · Todos los derechos reservados</span>
+      <img src="logo.png" alt="" style="height:22px;opacity:.3;" />
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
